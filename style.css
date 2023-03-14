@@ -95,6 +95,17 @@ body{
     padding: 4px;
 }
 
+#clear-todo{
+    background: transparent;
+    text-decoration: underline;
+    font-size: 1rem;
+    color: yellow;
+    text-shadow: 0 0 5px chocolate;
+    font-weight: bold;  
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
 
 @media(max-width: 768px){
     .container{

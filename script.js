@@ -1,19 +1,20 @@
 const todoCreaterForm = document.getElementById('todo-creater-form');
 const todoCreaterInput = document.getElementById('todo-creater-input');
 const todosBox = document.getElementById('todos-box');
+const clearTodoBtn = document.getElementById('clear-todo');
 
 let TodosList = [];
 let Screen;
 
 window.addEventListener('load', () => {
 	TodosList = new Todos();
-    Screen = new ScreenHandler();
-    Screen.renderChild();
+	Screen = new ScreenHandler();
+	Screen.renderChild();
 });
 
 class Todo {
 	constructor(todoText) {
-		this.isCompleted = true;
+		this.isCompleted = false;
 		this.todoText = todoText;
 		this.id = Math.random();
 	}
@@ -29,6 +30,11 @@ class Todos {
 		this.items.push(newTodo);
 		localStorage.setItem('todos', JSON.stringify(this.items));
 	}
+
+	clearTodos() {
+		this.items = [];
+		localStorage.clear();
+	}
 }
 
 class ScreenHandler {
@@ -38,18 +44,18 @@ class ScreenHandler {
 			(TodoListItem) => `
             <form class="todo-list-item" id="${TodoListItem.id}">
                 <i class="fa-solid fa-xmark"></i>
-                <input type="checkbox" ${TodoListItem.isCompleted && 'checked'}"/>
+                <input type="checkbox" />
                 <textarea>${TodoListItem.todoText}</textarea>
                 <button type="submit"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>
             </form>
         `
 		);
-        todosBox.innerHTML = allTodos.join(" ");
+		todosBox.innerHTML = allTodos.join(' ');
 	}
 
-    clearInput() {
-        todoCreaterInput.value = '';
-    }
+	clearInput() {
+		todoCreaterInput.value = '';
+	}
 }
 
 todoCreaterForm.addEventListener('submit', (e) => {
@@ -59,7 +65,13 @@ todoCreaterForm.addEventListener('submit', (e) => {
 		return;
 	}
 
-    TodosList.addTodo(todoCreaterInput.value);
-    Screen.clearInput();
-    Screen.renderChild();
+	TodosList.addTodo(todoCreaterInput.value);
+	Screen.clearInput();
+	Screen.renderChild();
+});
+
+clearTodoBtn.addEventListener('click', () => {
+	console.log('porwal');
+	TodosList.clearTodos();
+	Screen.renderChild();
 });
