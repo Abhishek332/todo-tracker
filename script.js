@@ -29,6 +29,14 @@ class Todos {
 		const newTodo = new Todo(todoText);
 		this.items.push(newTodo);
 		localStorage.setItem('todos', JSON.stringify(this.items));
+		Screen.clearInput();
+		Screen.renderChild();
+	}
+
+	deleteTodo(todo) {
+		this.items = this.items.filter((item) => item.id !== todo.id);
+		localStorage.setItem('todos', JSON.stringify(this.items));
+		Screen.renderChild();
 	}
 
 	clearTodos() {
@@ -43,14 +51,32 @@ class ScreenHandler {
 		const allTodos = TodosList.items.map(
 			(TodoListItem) => `
             <form class="todo-list-item" id="${TodoListItem.id}">
-                <i class="fa-solid fa-xmark"></i>
+                <button data-id="delete-todo"><i class="fa-solid fa-xmark"></i></button>
                 <input type="checkbox" />
                 <textarea>${TodoListItem.todoText}</textarea>
-                <button type="submit"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>
+                <button data-id="edit-todo"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>
             </form>
         `
 		);
 		todosBox.innerHTML = allTodos.join(' ');
+		this.addEventListeners();
+	}
+
+	addEventListeners() {
+		TodosList.items.forEach((TodoListItem) => {
+			const Todo = document.getElementById(TodoListItem.id);
+			Todo.addEventListener('submit', (e) => {
+				e.preventDefault();
+				//checking which button was clicked
+				const ClickedBtn = document.querySelector('form button:focus');
+				if (ClickedBtn.dataset.id === 'delete-todo') {
+					TodosList.deleteTodo(TodoListItem);
+				} else if (ClickedBtn.dataset.id === 'edit-todo') {
+					TodosList.items[TodosList.items.indexOf(TodoListItem)].todoText =
+						Todo.querySelector('textarea').value;
+				}
+			});
+		});
 	}
 
 	clearInput() {
@@ -66,12 +92,9 @@ todoCreaterForm.addEventListener('submit', (e) => {
 	}
 
 	TodosList.addTodo(todoCreaterInput.value);
-	Screen.clearInput();
-	Screen.renderChild();
 });
 
 clearTodoBtn.addEventListener('click', () => {
-	console.log('porwal');
 	TodosList.clearTodos();
 	Screen.renderChild();
 });
