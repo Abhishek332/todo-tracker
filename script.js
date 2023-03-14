@@ -2,36 +2,64 @@ const todoCreaterForm = document.getElementById('todo-creater-form');
 const todoCreaterInput = document.getElementById('todo-creater-input');
 const todosBox = document.getElementById('todos-box');
 
-const renderSingleTodo = ({todoText, isCompleted}) => {
-    const todoForm = document.createElement('form');
-    const todoInput = document.createElement('input');
-    todoInput.setAttribute('value', todoText);
-    todosBox.appendChild(todoInput);
+let TodosList = [];
+let Screen;
+
+window.addEventListener('load', () => {
+	TodosList = new Todos();
+    Screen = new ScreenHandler();
+    Screen.renderChild();
+});
+
+class Todo {
+	constructor(todoText) {
+		this.isCompleted = true;
+		this.todoText = todoText;
+		this.id = Math.random();
+	}
 }
 
-const renderTodos = ()=>{
-    const todos = JSON.parse(localStorage.getItem('todos') || '[]');
-    todos.forEach((todo)=>renderSingleTodo(todo));
+class Todos {
+	constructor() {
+		this.items = JSON.parse(localStorage.getItem('todos') || '[]');
+	}
+
+	addTodo(todoText) {
+		const newTodo = new Todo(todoText);
+		this.items.push(newTodo);
+		localStorage.setItem('todos', JSON.stringify(this.items));
+	}
 }
 
-window.addEventListener('load', renderTodos);
+class ScreenHandler {
+	renderChild() {
+		todosBox.innerHTML = '';
+		const allTodos = TodosList.items.map(
+			(TodoListItem) => `
+            <form class="todo-list-item" id="${TodoListItem.id}">
+                <i class="fa-solid fa-xmark"></i>
+                <input type="checkbox" ${TodoListItem.isCompleted && 'checked'}"/>
+                <textarea>${TodoListItem.todoText}</textarea>
+                <button type="submit"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>
+            </form>
+        `
+		);
+        todosBox.innerHTML = allTodos.join(" ");
+	}
+
+    clearInput() {
+        todoCreaterInput.value = '';
+    }
+}
 
 todoCreaterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if(!todoCreaterInput.value){
-        alert('Without text todos have no meaning');
-        return;
-    }
+	e.preventDefault();
+	if (!todoCreaterInput.value) {
+		alert('Without text todos have no meaning');
+		return;
+	}
 
-    //create and save todo
-    const todos = JSON.parse(localStorage.getItem('todos') || '[]');
-    const newTodo = {
-        isCompleted: false,
-        todoText: todoCreaterInput.value
-    };
-    todos.push(newTodo);
-    localStorage.setItem('todos', JSON.stringify(todos));
-
-    renderSingleTodo(newTodo);
-    todoCreaterInput.value = '';
+    TodosList.addTodo(todoCreaterInput.value);
+    Screen.clearInput();
+    Screen.renderChild();
 });

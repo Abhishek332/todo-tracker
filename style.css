@@ -1,6 +1,7 @@
 *{
     border: none;
     outline: none;
+    box-sizing: border-box;
 }
 
 body{
@@ -16,27 +17,31 @@ body{
     width: 45%;
     height: 70%;
     max-height: 95vh;
-    border-radius: 10px;
+    border-radius: 0.5rem;
     background-color: rgba(250, 244, 185, 0.313);
-    backdrop-filter: blur(30px);
+    backdrop-filter: blur(1rem);
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.container > div, .container > form{
+    width: 95%;
 }
 
 
 .container h1{
     font-size: 2.5rem;
     color: white;
-    text-shadow: 0 0 5px black;
+    text-shadow: 0 0 5px chocolate;
+    margin: 15px 0;
 }
 
 #todo-creater-form{
-    width: 90%;
     background-color: white;
-    height: 40px;
+    height: 2.5rem;
     display: flex;
-    border-radius: 4px 4px 0 0  ;
+    border-radius: 4px 4px 0 0 ;
 }
 
 #todo-creater-form input{
@@ -44,24 +49,50 @@ body{
     border-radius: 4px 0 0;
     padding: 12px;
     color: chocolate;
+    font-size: 1rem;
 }
 
 #todo-creater-form button{
    flex: 0.3;
     font-weight: bold;
     color: white;
+    font-size: 1rem;
     cursor: pointer;
     background-color: chocolate;
     border-radius: 0 4px 0 0;
 }
 
 #todos-box{
-    width: 90%;
     flex: 1;
-    margin: 20px 0;
+    margin: 0.5rem 0 1rem;
     overflow: scroll;
     border-radius: 0 0 4px 4px;
     background-color: rgba(228, 228, 228, 0.501);
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    padding: 10px;    
+}
+
+#todos-box .todo-list-item{
+    width: 100%;
+    background: white;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+}
+
+#todos-box .todo-list-item *{
+    margin: 0 4px;
+}
+
+#todos-box .todo-list-item button{
+    background-color: transparent;
+}
+
+#todos-box .todo-list-item textarea{
+    flex: 1;
+    padding: 4px;
 }
 
 
