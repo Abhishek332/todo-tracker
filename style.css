@@ -93,6 +93,11 @@ body{
 #todos-box .todo-list-item textarea{
     flex: 1;
     padding: 4px;
+    background-color: transparent;
+}
+
+#todos-box .todo-list-item textarea.mark-done{
+    text-decoration: line-through;
 }
 
 #clear-todo{
