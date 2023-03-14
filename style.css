@@ -1,0 +1,72 @@
+*{
+    border: none;
+    outline: none;
+}
+
+body{
+    background: url('./background.jpg') center center/cover no-repeat;
+    height: 100vh;
+}
+
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45%;
+    height: 70%;
+    max-height: 95vh;
+    border-radius: 10px;
+    background-color: rgba(250, 244, 185, 0.313);
+    backdrop-filter: blur(30px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.container h1{
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: 0 0 5px black;
+}
+
+#todo-creater-form{
+    width: 90%;
+    background-color: white;
+    height: 40px;
+    display: flex;
+    border-radius: 4px 4px 0 0  ;
+}
+
+#todo-creater-form input{
+    flex: 0.7;
+    border-radius: 4px 0 0;
+    padding: 12px;
+    color: chocolate;
+}
+
+#todo-creater-form button{
+   flex: 0.3;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    background-color: chocolate;
+    border-radius: 0 4px 0 0;
+}
+
+#todos-box{
+    width: 90%;
+    flex: 1;
+    margin: 20px 0;
+    overflow: scroll;
+    border-radius: 0 0 4px 4px;
+    background-color: rgba(228, 228, 228, 0.501);
+}
+
+
+@media(max-width: 768px){
+    .container{
+        width: 90%;
+    }
+}
