@@ -88,13 +88,25 @@ body{
     cursor: pointer;
 }
 
+#todos-box .todo-list-item .todo-text,
 #todos-box .todo-list-item textarea{
-    flex: 1;
-    padding: 4px;
+    width: 100%;
+    margin: 0;
     background-color: transparent;
+} 
+
+#todos-box .todo-list-item textarea{
+    padding: 0 4px;
 }
 
-#todos-box .todo-list-item textarea.mark-done{
+#todos-box .todo-list-item .todo-text p{
+    color: chocolate;
+    margin: 4px;
+    padding: 4px;
+}
+
+
+#todos-box .todo-list-item .todo-text p.mark-done{
     text-decoration: line-through;
 }
 
