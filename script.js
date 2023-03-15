@@ -71,6 +71,7 @@ class ScreenHandler {
 		const allTodos = TodosList.items.map(
 			(TodoListItem) => `
             <form class="todo-list-item" id="${TodoListItem.id}">
+			<button data-id="drag-btn" class="drag-grip"><i class="fa-solid fa-grip-lines-vertical"></i></button>
                 <input type="checkbox" ${TodoListItem.isCompleted ? 'checked' : ''}/>
                 <div class="todo-text">
 					<p  ${TodoListItem.isCompleted ? 'class="mark-done"': ''}>${TodoListItem.todoText}</p>
