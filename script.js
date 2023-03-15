@@ -85,30 +85,38 @@ class ScreenHandler {
 	addEventListeners() {
 		TodosList.items.forEach((TodoListItem) => {
 			const Todo = document.getElementById(TodoListItem.id);
+			const CheckBox = Todo.querySelector("input[type='checkbox']");
+			const EditBtn = Todo.querySelector('button[data-id="edit-todo-btn"]');
+			const DeleteBtn = Todo.querySelector('button[data-id="delete-todo"]');
+
 			Todo.addEventListener('submit', (e) => {
 				e.preventDefault();
-				//checking which button was clicked
+				
+				//save btn click;
 				const ClickedBtn = document.querySelector('form button:focus');
-				if (ClickedBtn.dataset.id === 'delete-todo') {
-					TodosList.deleteTodo(TodoListItem);
-				} else if (ClickedBtn.dataset.id === 'edit-todo-btn') {
-					Todo.removeChild(ClickedBtn);
-					Todo.innerHTML += `<button data-id="save-updated-todo">
-                                                <i class="fa-solid fa-floppy-disk"></i>
-                                            </button>`;
-					Todo.querySelector('textarea').removeAttribute('disabled');
-					Todo.querySelector('textarea').focus();
-				} else if (ClickedBtn.dataset.id === 'save-updated-todo') {
+				if(ClickedBtn.dataset.id === 'save-updated-todo') {
 					const textareaValue = Todo.querySelector('textarea').value;
 					TodosList.updateTodo(TodoListItem, textareaValue);
 				}
 			});
 
-            const CheckBox = Todo.querySelector("input[type='checkbox']");
-            CheckBox.addEventListener('click', (e) => {
+			CheckBox.addEventListener('click', (e) => {
                 console.log(e.target.checked)
                 TodosList.updateTodoStatus(TodoListItem, e.target.checked);
             })
+
+			EditBtn.addEventListener('click', (e) => {
+				Todo.removeChild(EditBtn);
+				Todo.innerHTML += `<button data-id="save-updated-todo">
+											<i class="fa-solid fa-floppy-disk"></i>
+										</button>`;
+				Todo.querySelector('textarea').removeAttribute('disabled');
+				Todo.querySelector('textarea').focus();
+			});
+
+			DeleteBtn.addEventListener('click', (e) => {
+				TodosList.deleteTodo(TodoListItem);
+			});
 		});
 	}
 
