@@ -71,10 +71,13 @@ class ScreenHandler {
 		const allTodos = TodosList.items.map(
 			(TodoListItem) => `
             <form class="todo-list-item" id="${TodoListItem.id}">
-                <button data-id="delete-todo"><i class="fa-solid fa-xmark"></i></button>
+			<button data-id="drag-btn" class="drag-grip"><i class="fa-solid fa-grip-lines-vertical"></i></button>
                 <input type="checkbox" ${TodoListItem.isCompleted ? 'checked' : ''}/>
-                <textarea disabled  ${TodoListItem.isCompleted ? 'class="mark-done"': ''}>${TodoListItem.todoText}</textarea>
+                <div class="todo-text">
+					<p  ${TodoListItem.isCompleted ? 'class="mark-done"': ''}>${TodoListItem.todoText}</p>
+				</div>
                 <button data-id="edit-todo-btn"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>
+				<button data-id="delete-todo"><i class="fa-solid fa-xmark"></i></button>
             </form>
         `
 		);
@@ -85,30 +88,43 @@ class ScreenHandler {
 	addEventListeners() {
 		TodosList.items.forEach((TodoListItem) => {
 			const Todo = document.getElementById(TodoListItem.id);
+			const CheckBox = Todo.querySelector("input[type='checkbox']");
+			const EditBtn = Todo.querySelector('button[data-id="edit-todo-btn"]');
+			const DeleteBtn = Todo.querySelector('button[data-id="delete-todo"]');
+
 			Todo.addEventListener('submit', (e) => {
 				e.preventDefault();
-				//checking which button was clicked
+				
+				//save btn click;
 				const ClickedBtn = document.querySelector('form button:focus');
-				if (ClickedBtn.dataset.id === 'delete-todo') {
-					TodosList.deleteTodo(TodoListItem);
-				} else if (ClickedBtn.dataset.id === 'edit-todo-btn') {
-					Todo.removeChild(ClickedBtn);
-					Todo.innerHTML += `<button data-id="save-updated-todo">
-                                                <i class="fa-solid fa-floppy-disk"></i>
-                                            </button>`;
-					Todo.querySelector('textarea').removeAttribute('disabled');
-					Todo.querySelector('textarea').focus();
-				} else if (ClickedBtn.dataset.id === 'save-updated-todo') {
+				if(ClickedBtn.dataset.id === 'save-updated-todo') {
 					const textareaValue = Todo.querySelector('textarea').value;
 					TodosList.updateTodo(TodoListItem, textareaValue);
 				}
 			});
 
-            const CheckBox = Todo.querySelector("input[type='checkbox']");
-            CheckBox.addEventListener('click', (e) => {
-                console.log(e.target.checked)
+			CheckBox.addEventListener('click', (e) => {
                 TodosList.updateTodoStatus(TodoListItem, e.target.checked);
             })
+
+			EditBtn.addEventListener('click', (e) => {
+				Todo.removeChild(EditBtn);
+				Todo.removeChild(DeleteBtn);
+				const TodoTextBlock = Todo.querySelector('.todo-text');
+				TodoTextBlock.innerHTML = `<textarea class="todo-text-input">${TodoListItem.todoText}</textarea>`;
+				Todo.innerHTML += `<button data-id="save-updated-todo">
+										<i class="fa-solid fa-floppy-disk"></i>
+									</button>
+									<button data-id="delete-todo">
+										<i class="fa-solid fa-xmark"></i>
+									</button>`;
+				Todo.querySelector('textarea').focus();
+			});
+
+			DeleteBtn.addEventListener('click', (e) => {
+				e.preventDefault();
+				TodosList.deleteTodo(TodoListItem);
+			});
 		});
 	}
 

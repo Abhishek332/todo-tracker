@@ -2,6 +2,8 @@
     border: none;
     outline: none;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body{
@@ -78,9 +80,15 @@ body{
     width: 100%;
     background: white;
     margin: 4px 0;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    padding: 0 2px;
+    padding: 8px;
+    gap: 2%;
+}
+
+#todos-box .todo-list-item .drag-grip .fa-grip-lines-vertical{
+    color: chocolate;
+    font-size: 24px;
 }
 
 #todos-box .todo-list-item button{
@@ -88,13 +96,18 @@ body{
     cursor: pointer;
 }
 
+#todos-box .todo-list-item .todo-text,
 #todos-box .todo-list-item textarea{
-    flex: 1;
-    padding: 4px;
+    width: 100%;
     background-color: transparent;
 }
 
-#todos-box .todo-list-item textarea.mark-done{
+#todos-box .todo-list-item .todo-text p{
+    color: chocolate;
+}
+
+
+#todos-box .todo-list-item .todo-text p.mark-done{
     text-decoration: line-through;
 }
 
