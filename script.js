@@ -107,10 +107,6 @@ class ScreenHandler {
 			const DeleteBtn = Todo.querySelector('button[data-id="delete-todo"]');
 			const DragBtn = Todo.querySelector('button[data-id="drag-btn"]');
 
-			Todo.addEventListener('submit', (e) => {
-				e.preventDefault();
-			});
-
 			Todo.addEventListener('dragstart', (e) => {
 				Todo.classList.add('dragging');
 				e.dataTransfer.effectAllowed = 'move';
