@@ -33,15 +33,16 @@ class Todos {
 		Screen.renderChild();
 	}
 
-	deleteTodo(todo) {
-		this.items = this.items.filter((item) => item.id !== todo.id);
+	deleteTodo(todoId) {
+		this.items = this.items.filter((item) => item.id !== Number(todoId));
 		localStorage.setItem('todos', JSON.stringify(this.items));
 		Screen.renderChild();
 	}
 
-	updateTodo(todo, updatedText) {
+	updateTodo(todoId, updatedText) {
+		console.log(todoId, updatedText);
 		this.items.forEach((item) => {
-			if (item.id === todo.id) {
+			if (item.id === Number(todoId)) {
 				item.todoText = updatedText;
 			}
 		});
@@ -49,9 +50,9 @@ class Todos {
 		Screen.renderChild();
 	}
 
-	updateTodoStatus(todo, status) {
+	updateTodoStatus(todoId, status) {
 		this.items.forEach((item) => {
-			if (item.id === todo.id) {
+			if (item.id === Number(todoId)) {
 				item.isCompleted = status;
 			}
 		});
@@ -81,7 +82,7 @@ class ScreenHandler {
 			(TodoListItem) => `
             <form class="todo-list-item" id="${TodoListItem.id}">
 			<button data-id="drag-btn" class="drag-grip"><i class="fa-solid fa-grip-lines-vertical"></i></button>
-                <input type="checkbox" ${
+                <input data-id="checkbox" type="checkbox" ${
 									TodoListItem.isCompleted ? 'checked' : ''
 								}/>
                 <div class="todo-text">
@@ -89,8 +90,8 @@ class ScreenHandler {
 				TodoListItem.todoText
 			}</p>
 				</div>
-                <button data-id="edit-todo-btn"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>
-				<button data-id="delete-todo"><i class="fa-solid fa-xmark"></i></button>
+               <button data-id="edit-todo-btn"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>
+				<button data-id="delete-todo-btn"><i class="fa-solid fa-xmark"></i></button>
             </form>
         `
 		);
@@ -108,36 +109,6 @@ class ScreenHandler {
 
 			Todo.addEventListener('submit', (e) => {
 				e.preventDefault();
-
-				//save btn click;
-				const ClickedBtn = document.querySelector('form button:focus');
-				if (ClickedBtn.dataset.id === 'save-updated-todo') {
-					const textareaValue = Todo.querySelector('textarea').value;
-					TodosList.updateTodo(TodoListItem, textareaValue);
-				}
-			});
-
-			CheckBox.addEventListener('click', (e) => {
-				TodosList.updateTodoStatus(TodoListItem, e.target.checked);
-			});
-
-			EditBtn.addEventListener('click', (e) => {
-				Todo.removeChild(EditBtn);
-				Todo.removeChild(DeleteBtn);
-				const TodoTextBlock = Todo.querySelector('.todo-text');
-				TodoTextBlock.innerHTML = `<textarea class="todo-text-input">${TodoListItem.todoText}</textarea>`;
-				Todo.innerHTML += `<button data-id="save-updated-todo">
-										<i class="fa-solid fa-floppy-disk"></i>
-									</button>
-									<button data-id="delete-todo">
-										<i class="fa-solid fa-xmark"></i>
-									</button>`;
-				Todo.querySelector('textarea').focus();
-			});
-
-			DeleteBtn.addEventListener('click', (e) => {
-				e.preventDefault();
-				TodosList.deleteTodo(TodoListItem);
 			});
 
 			Todo.addEventListener('dragstart', (e) => {
@@ -182,7 +153,7 @@ clearTodoBtn.addEventListener('click', () => {
 todosBox.addEventListener('dragover', (e) => {
 	e.preventDefault();
 	const afterElement = getClosestTodo(todosBox, e.clientY);
-
+	console.log('abhishek');
 	const draggedTodo = document.querySelector('.todo-list-item.dragging');
 	if (afterElement == null) {
 		todosBox.appendChild(draggedTodo);
@@ -195,8 +166,54 @@ todosBox.addEventListener('drop', (e) => {
 	const draggedTodo = document.querySelector('.todo-list-item.dragging');
 	const allTodoElements = [...todosBox.querySelectorAll('.todo-list-item')];
 	const draggedTodoIndex = allTodoElements.indexOf(draggedTodo);
-
+	console.log('callled');
 	TodosList.changeTodosOrder(draggedTodo.id, draggedTodoIndex);
+});
+
+todosBox.addEventListener('click', (e) => {
+	const clickedCurrentTodoChildNode = e.target;
+	const currentTodoNode = clickedCurrentTodoChildNode.parentNode;
+	const currentTodoTextBlockNode = currentTodoNode.querySelector('.todo-text');
+	const DeleteBtnNode = currentTodoNode.querySelector(
+		'[data-id=delete-todo-btn]'
+	);
+
+	switch (clickedCurrentTodoChildNode.dataset.id) {
+		case 'checkbox': {
+			TodosList.updateTodoStatus(
+				currentTodoNode.id,
+				clickedCurrentTodoChildNode.checked
+			);
+			break;
+		}
+
+		case 'edit-todo-btn': {
+			currentTodoNode.removeChild(clickedCurrentTodoChildNode);
+			currentTodoNode.removeChild(DeleteBtnNode);
+
+			currentTodoTextBlockNode.innerHTML = `<textarea class="todo-text-input">${currentTodoTextBlockNode.innerText}</textarea>`;
+			currentTodoNode.innerHTML += `<button data-id="save-updated-todo-btn"><i class="fa-solid fa-floppy-disk"></i></button>
+										<button data-id="delete-todo-btn"><i class="fa-solid fa-xmark"></i></button>`;
+
+			currentTodoNode.querySelector('textarea').focus();
+			break;
+		}
+
+		case 'save-updated-todo-btn': {
+			e.preventDefault();
+			TodosList.updateTodo(
+				currentTodoNode.id,
+				currentTodoTextBlockNode.firstElementChild.value
+			);
+			break;
+		}
+
+		case 'delete-todo-btn': {
+			e.preventDefault();
+			TodosList.deleteTodo(currentTodoNode.id);
+			break;
+		}
+	}
 });
 
 function getClosestTodo(todosBox, y) {
