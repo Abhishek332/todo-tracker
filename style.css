@@ -6,6 +6,11 @@
 	padding: 0;
 }
 
+svg {
+	/* to avoid path to be occur in mouse event target */
+	pointer-events: none;
+}
+
 body {
 	background: url('./background.jpg') center center/cover no-repeat;
 	height: 100vh;
@@ -106,7 +111,7 @@ body {
 }
 
 #todos-box .todo-list-item .todo-text,
-#todos-box .todo-list-item textarea {
+#todos-box .todo-list-item .todo-text * {
 	width: 100%;
 	background-color: transparent;
 }
