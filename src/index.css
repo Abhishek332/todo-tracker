@@ -12,7 +12,7 @@ svg {
 }
 
 body {
-	background: url('./background.jpg') center center/cover no-repeat;
+	background: url('./assets/background.jpg') center center/cover no-repeat;
 	height: 100vh;
 }
 
@@ -81,7 +81,7 @@ body {
 	padding: 10px;
 }
 
-#todos-box .todo-list-item {
+#todos-box .todo {
 	width: 100%;
 	background: white;
 	margin: 4px 0;
@@ -91,36 +91,36 @@ body {
 	gap: 2%;
 }
 
-#todos-box .todo-list-item.dragging {
+#todos-box .todo.dragging {
 	background-color: rgba(255, 255, 255, 0.69);
 	backdrop-filter: blur(30px);
 }
 
-#todos-box .todo-list-item .drag-grip {
+#todos-box .todo .drag-grip {
 	cursor: move;
 }
 
-#todos-box .todo-list-item .drag-grip .fa-grip-lines-vertical {
+#todos-box .todo .drag-grip .fa-grip-lines-vertical {
 	color: chocolate;
 	font-size: 24px;
 }
 
-#todos-box .todo-list-item button {
+#todos-box .todo button {
 	background-color: transparent;
 	cursor: pointer;
 }
 
-#todos-box .todo-list-item .todo-text,
-#todos-box .todo-list-item .todo-text * {
+#todos-box .todo .todo-text,
+#todos-box .todo .todo-text * {
 	width: 100%;
 	background-color: transparent;
 }
 
-#todos-box .todo-list-item .todo-text p {
+#todos-box .todo .todo-text p {
 	color: chocolate;
 }
 
-#todos-box .todo-list-item .todo-text p.mark-done {
+#todos-box .todo .todo-text p.mark-done {
 	text-decoration: line-through;
 }
 
