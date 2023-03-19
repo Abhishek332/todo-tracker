@@ -24,7 +24,11 @@ export default class Todo {
 			this.value.todoText
 		}</p>
 			</div>
-            <button data-id="edit-todo-btn"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>
+            ${
+							!this.value.isCompleted
+								? '<button data-id="edit-todo-btn"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>'
+								: ''
+						}
 			<button data-id="delete-todo-btn"><i class="fa-solid fa-xmark"></i></button>`;
 	}
 
