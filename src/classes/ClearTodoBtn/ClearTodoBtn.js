@@ -1,4 +1,4 @@
-import Todos from '../Todos/Todos';
+const Todos = require('../Todos/Todos');
 
 class ClearTodoBtn {
 	constructor() {
@@ -19,4 +19,4 @@ class ClearTodoBtn {
 }
 
 const ClearTodoBtnInstance = new ClearTodoBtn();
-export default ClearTodoBtnInstance;
+module.exports = ClearTodoBtnInstance;

@@ -1,4 +1,4 @@
-export default class Todo {
+class Todo {
 	constructor({ id, todoText, isCompleted }) {
 		this.value = {
 			todoText: todoText,
@@ -53,3 +53,5 @@ export default class Todo {
 		});
 	}
 }
+
+module.exports = Todo;

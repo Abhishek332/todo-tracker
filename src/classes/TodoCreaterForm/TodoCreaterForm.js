@@ -1,4 +1,4 @@
-import Todos from '../Todos/Todos';
+const Todos = require('../Todos/Todos');
 
 class TodoCreaterForm {
 	constructor() {
@@ -35,4 +35,4 @@ class TodoCreaterForm {
 }
 
 const TodoCreaterFormInstance = new TodoCreaterForm();
-export default TodoCreaterFormInstance;
+module.exports = TodoCreaterFormInstance;
