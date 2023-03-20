@@ -86,7 +86,7 @@ class Todos {
 					currentTodoNode.removeChild(clickedCurrentTodoChildNode);
 					currentTodoNode.removeChild(DeleteBtnNode);
 
-					currentTodoTextBlockNode.innerHTML = `<textarea data-testid="todo-text-input" class="todo-text-input">${currentTodoTextBlockNode.innerText}</textarea>`;
+					currentTodoTextBlockNode.innerHTML = `<textarea data-testid="todo-textarea" class="todo-text-input">${currentTodoTextBlockNode.innerText}</textarea>`;
 					currentTodoNode.innerHTML += `<button data-testid="save-updated-todo-btn"><i class="fa-solid fa-floppy-disk"></i></button>
 										<button data-testid="delete-todo-btn" disabled><i class="fa-solid fa-xmark"></i></button>`;
 
@@ -117,8 +117,8 @@ class Todos {
 		this.renderTodos();
 	}
 
-	addTodo(todoText) {
-		const newTodo = new Todo({ todoText });
+	addTodo(todoText, testid) {
+		const newTodo = new Todo({ todoText, testid });
 		this.value.push(newTodo.value);
 		this.saveValueToLocalStorageAndUpdateNode();
 	}

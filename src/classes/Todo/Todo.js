@@ -1,9 +1,9 @@
 class Todo {
-	constructor({ id, todoText, isCompleted }) {
+	constructor({ id, todoText, isCompleted, testid }) {
 		this.value = {
 			todoText: todoText,
 			isCompleted: isCompleted || false,
-			id: id || Math.random().toString(),
+			id: id || testid || Math.random().toString(),
 		};
 		this.node = document.createElement('form');
 		this.node.classList.add('todo');
