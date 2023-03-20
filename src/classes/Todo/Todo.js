@@ -8,6 +8,7 @@ class Todo {
 		this.node = document.createElement('form');
 		this.node.classList.add('todo');
 		this.node.setAttribute('id', this.value.id);
+		this.node.setAttribute('data-testid', 'todo');
 
 		this.addInnerHtml();
 		this.addEventListeners();
@@ -15,25 +16,25 @@ class Todo {
 
 	addInnerHtml() {
 		this.node.innerHTML = `
-            <button data-id="drag-btn" class="drag-grip"><i class="fa-solid fa-grip-lines-vertical"></i></button>
-            <input data-id="checkbox" type="checkbox" ${
+            <button data-testid="drag-btn" class="drag-grip"><i class="fa-solid fa-grip-lines-vertical"></i></button>
+            <input data-testid="checkbox" type="checkbox" ${
 							this.value.isCompleted ? 'checked' : ''
 						}/>
-            <div class="todo-text">
-				<p  ${this.value.isCompleted ? 'class="mark-done"' : ''}>${
-			this.value.todoText
-		}</p>
+            <div data-testid="todo-text-block" class="todo-text">
+				<p data-testid="todo-text-paragraph" ${
+					this.value.isCompleted ? 'class="mark-done"' : ''
+				}>${this.value.todoText}</p>
 			</div>
             ${
 							!this.value.isCompleted
-								? '<button data-id="edit-todo-btn"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>'
+								? '<button data-testid="edit-todo-btn"><i class="fa-solid fa-pen-to-square edit-btn"></i></button>'
 								: ''
 						}
-			<button data-id="delete-todo-btn"><i class="fa-solid fa-xmark"></i></button>`;
+			<button data-testid="delete-todo-btn"><i class="fa-solid fa-xmark"></i></button>`;
 	}
 
 	addEventListeners() {
-		const DragBtn = this.node.querySelector('button[data-id="drag-btn"]');
+		const DragBtn = this.node.querySelector('button[data-testid="drag-btn"]');
 
 		this.node.addEventListener('dragstart', (e) => {
 			this.node.classList.add('dragging');

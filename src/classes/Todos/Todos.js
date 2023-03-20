@@ -5,6 +5,7 @@ class Todos {
 		this.value = JSON.parse(localStorage.getItem('todos') || '[]');
 		this.node = document.createElement('div');
 		this.node.setAttribute('id', 'todos-box');
+		this.node.setAttribute('testid', 'todos-box');
 
 		this.renderTodos(); //this.addInnerHtml in other classes
 		this.addEventListeners();
@@ -69,10 +70,10 @@ class Todos {
 			const currentTodoTextBlockNode =
 				currentTodoNode.querySelector('.todo-text');
 			const DeleteBtnNode = currentTodoNode.querySelector(
-				'[data-id=delete-todo-btn]'
+				'[data-testid=delete-todo-btn]'
 			);
 
-			switch (clickedCurrentTodoChildNode.dataset.id) {
+			switch (clickedCurrentTodoChildNode.dataset.testid) {
 				case 'checkbox': {
 					this.updateTodoStatus(
 						currentTodoNode.id,
@@ -85,9 +86,9 @@ class Todos {
 					currentTodoNode.removeChild(clickedCurrentTodoChildNode);
 					currentTodoNode.removeChild(DeleteBtnNode);
 
-					currentTodoTextBlockNode.innerHTML = `<textarea class="todo-text-input">${currentTodoTextBlockNode.innerText}</textarea>`;
-					currentTodoNode.innerHTML += `<button data-id="save-updated-todo-btn"><i class="fa-solid fa-floppy-disk"></i></button>
-										<button data-id="delete-todo-btn" disabled><i class="fa-solid fa-xmark"></i></button>`;
+					currentTodoTextBlockNode.innerHTML = `<textarea data-testid="todo-text-input" class="todo-text-input">${currentTodoTextBlockNode.innerText}</textarea>`;
+					currentTodoNode.innerHTML += `<button data-testid="save-updated-todo-btn"><i class="fa-solid fa-floppy-disk"></i></button>
+										<button data-testid="delete-todo-btn" disabled><i class="fa-solid fa-xmark"></i></button>`;
 
 					currentTodoNode.querySelector('textarea').focus();
 					break;
