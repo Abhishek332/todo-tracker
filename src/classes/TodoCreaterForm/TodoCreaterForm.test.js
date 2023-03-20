@@ -36,7 +36,7 @@ describe('TodoCreaterForm test', () => {
 		expect(Input).toHaveAttribute('value', '');
 
 		fireEvent.click(Button);
-		expect(Alert).toHaveBeenCalled();
+		expect(Alert).toHaveBeenCalledWith('Without text todos have no meaning');
 		expect(Todos.value).toHaveLength(1);
 	});
 });
