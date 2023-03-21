@@ -1,9 +1,9 @@
-const TodoCreaterForm = require('./classes/TodoCreaterForm/TodoCreaterForm');
-const Todos = require('./classes/Todos/Todos');
-const ClearTodoBtn = require('./classes/ClearTodoBtn/ClearTodoBtn');
-require('./index.css');
+import TodoCreaterForm from './classes/TodoCreaterForm/TodoCreaterForm';
+import Todos from './classes/Todos/Todos';
+import ClearTodoBtn from './classes/ClearTodoBtn/ClearTodoBtn';
+import './index.css';
 
-export class Main {
+class Main {
 	constructor() {
 		const Container = document.querySelector('.container');
 		Container.innerHTML += '<h1>Todo List</h1>';

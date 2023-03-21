@@ -1,4 +1,4 @@
-const Todo = require('../Todo/Todo');
+import Todo from '../Todo/Todo';
 
 class Todos {
 	constructor() {
@@ -164,4 +164,4 @@ class Todos {
 
 //exporting instance so whole lifecycle of app instance not get change;
 let TodosInstance = new Todos();
-module.exports = TodosInstance;
+export default TodosInstance;
