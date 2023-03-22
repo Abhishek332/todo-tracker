@@ -10,9 +10,9 @@ describe('ClearTodoBtn test', () => {
 	});
 
 	it('should delete all todos onclick of clear-todo button', () => {
-		Todos.addTodo({ todoText: 'todo-1' });
-		expect(Todos.value.length).toEqual(1);
+		Todos.addTodo('todo-1');
+		expect(Todos.value).toHaveLength(1);
 		fireEvent.click(ClearTodoBtn.node);
-		expect(Todos.value.length).toEqual(0);
+		expect(Todos.value).toHaveLength(0);
 	});
 });
