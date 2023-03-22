@@ -6,11 +6,11 @@ class Todos {
 		this.node = document.createElement('div');
 		this.node.setAttribute('id', 'todos-box');
 
-		this.renderTodos(); //this.addInnerHtml in other classes
-		this.addEventListeners();
+		this.#renderTodos(); //this.addInnerHtml in other classes
+		this.#addEventListeners();
 	}
 
-	renderTodos() {
+	#renderTodos() {
 		this.node.innerHTML = '';
 		this.value.forEach((todoObj) => {
 			const todo = new Todo(todoObj);
@@ -18,34 +18,34 @@ class Todos {
 		});
 	}
 
-	addEventListeners() {
-		function getElementsAfterTodo(clientY) {
-			const remainDraggableTodos = [
-				...this.node.querySelectorAll('.todo:not(.dragging)'),
-			];
+	#getElementsAfterTodo(clientY) {
+		const remainDraggableTodos = [
+			...this.node.querySelectorAll('.todo:not(.dragging)'),
+		];
 
-			const closestAfterTodo = remainDraggableTodos.reduce(
-				(closestTodo, remainDraggableTodo) => {
-					const box = remainDraggableTodo.getBoundingClientRect();
-					const offset = clientY - box.top - box.height / 2;
+		const closestAfterTodo = remainDraggableTodos.reduce(
+			(closestTodo, remainDraggableTodo) => {
+				const box = remainDraggableTodo.getBoundingClientRect();
+				const offset = clientY - box.top - box.height / 2;
 
-					if (offset < 0 && offset > closestTodo.offset) {
-						return { offset, element: remainDraggableTodo };
-					} else {
-						return closestTodo;
-					}
-				},
-				{ offset: Number.NEGATIVE_INFINITY, element: null }
-			);
+				if (offset < 0 && offset > closestTodo.offset) {
+					return { offset, element: remainDraggableTodo };
+				} else {
+					return closestTodo;
+				}
+			},
+			{ offset: Number.NEGATIVE_INFINITY, element: null }
+		);
 
-			return closestAfterTodo.element;
-		}
+		return closestAfterTodo.element;
+	}
 
+	#addEventListeners() {
 		this.node.addEventListener('dragover', (e) => {
 			e.preventDefault();
 
 			const draggedTodo = this.node.querySelector('.todo.dragging');
-			const afterElement = getElementsAfterTodo.call(this, e.clientY);
+			const afterElement = this.#getElementsAfterTodo(e.clientY);
 
 			if (afterElement === null) {
 				//dragged at the end of the list
@@ -111,20 +111,20 @@ class Todos {
 		});
 	}
 
-	saveValueToLocalStorageAndUpdateNode() {
+	#saveValueToLocalStorageAndUpdateNode() {
 		localStorage.setItem('todos', JSON.stringify(this.value));
-		this.renderTodos();
+		this.#renderTodos();
 	}
 
 	addTodo(todoText) {
 		const newTodo = new Todo({ todoText });
 		this.value.push(newTodo.value);
-		this.saveValueToLocalStorageAndUpdateNode();
+		this.#saveValueToLocalStorageAndUpdateNode();
 	}
 
 	deleteTodo(todoId) {
 		this.value = this.value.filter((todoObj) => todoObj.id !== todoId);
-		this.saveValueToLocalStorageAndUpdateNode();
+		this.#saveValueToLocalStorageAndUpdateNode();
 	}
 
 	updateTodo(todoId, updatedText) {
@@ -133,7 +133,7 @@ class Todos {
 				todoObj.todoText = updatedText;
 			}
 		});
-		this.saveValueToLocalStorageAndUpdateNode();
+		this.#saveValueToLocalStorageAndUpdateNode();
 	}
 
 	updateTodoStatus(todoId, status) {
@@ -142,12 +142,12 @@ class Todos {
 				todoObj.isCompleted = status;
 			}
 		});
-		this.saveValueToLocalStorageAndUpdateNode();
+		this.#saveValueToLocalStorageAndUpdateNode();
 	}
 
 	clearTodos() {
 		this.value = [];
-		this.saveValueToLocalStorageAndUpdateNode();
+		this.#saveValueToLocalStorageAndUpdateNode();
 	}
 
 	changeTodosOrder(draggedTodoId, draggedTodoIndex) {

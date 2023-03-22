@@ -9,11 +9,11 @@ export default class Todo {
 		this.node.classList.add('todo');
 		this.node.setAttribute('id', this.value.id);
 
-		this.addInnerHtml();
-		this.addEventListeners();
+		this.#addInnerHtml();
+		this.#addEventListeners();
 	}
 
-	addInnerHtml() {
+	#addInnerHtml() {
 		this.node.innerHTML = `
             <button data-id="drag-btn" class="drag-grip"><i class="fa-solid fa-grip-lines-vertical"></i></button>
             <input data-id="checkbox" type="checkbox" ${
@@ -32,7 +32,7 @@ export default class Todo {
 			<button data-id="delete-todo-btn"><i class="fa-solid fa-xmark"></i></button>`;
 	}
 
-	addEventListeners() {
+	#addEventListeners() {
 		const DragBtn = this.node.querySelector('button[data-id="drag-btn"]');
 
 		this.node.addEventListener('dragstart', (e) => {

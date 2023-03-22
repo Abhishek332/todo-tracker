@@ -5,11 +5,11 @@ class TodoCreaterForm {
 		this.node = document.createElement('form');
 		this.node.setAttribute('id', 'todo-creater-form');
 
-		this.addInnerHtml();
-		this.addEventListeners();
+		this.#addInnerHtml();
+		this.#addEventListeners();
 	}
 
-	addInnerHtml() {
+	#addInnerHtml() {
 		this.node.innerHTML = `<input
 					placeholder="Enter todo task here"
 					id="todo-creater-input"
@@ -18,7 +18,7 @@ class TodoCreaterForm {
 				<button>Add</button>`;
 	}
 
-	addEventListeners() {
+	#addEventListeners() {
 		this.node.addEventListener('submit', (e) => {
 			e.preventDefault();
 			const todoCreaterInput = this.node.getElementsByTagName('input')[0];
