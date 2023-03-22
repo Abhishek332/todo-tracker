@@ -5,15 +5,15 @@ class ClearTodoBtn {
 		this.node = document.createElement('button');
 		this.node.setAttribute('id', 'clear-todo');
 
-		this.addInnerHtml();
-		this.addEventListeners();
+		this.#addInnerHtml();
+		this.#addEventListeners();
 	}
 
-	addInnerHtml() {
+	#addInnerHtml() {
 		this.node.innerHTML = 'Clear Todo';
 	}
 
-	addEventListeners() {
+	#addEventListeners() {
 		this.node.addEventListener('click', (e) => Todos.clearTodos());
 	}
 }

@@ -10,11 +10,11 @@ class Todo {
 		this.node.setAttribute('id', this.value.id);
 		this.node.setAttribute('data-testid', 'todo');
 
-		this.addInnerHtml();
-		this.addEventListeners();
+		this.#addInnerHtml();
+		this.#addEventListeners();
 	}
 
-	addInnerHtml() {
+	#addInnerHtml() {
 		this.node.innerHTML = `
             <button data-testid="drag-btn" class="drag-grip"><i class="fa-solid fa-grip-lines-vertical"></i></button>
             <input data-testid="checkbox" type="checkbox" ${
@@ -33,8 +33,8 @@ class Todo {
 			<button data-testid="delete-todo-btn"><i class="fa-solid fa-xmark"></i></button>`;
 	}
 
-	addEventListeners() {
-		const DragBtn = this.node.querySelector('button[data-testid="drag-btn"]');
+	#addEventListeners() {
+		const DragBtn = this.node.querySelector('button[data-id="drag-btn"]');
 
 		this.node.addEventListener('dragstart', (e) => {
 			this.node.classList.add('dragging');
