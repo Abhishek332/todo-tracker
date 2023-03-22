@@ -34,7 +34,7 @@ class Todo {
 	}
 
 	#addEventListeners() {
-		const DragBtn = this.node.querySelector('button[data-id="drag-btn"]');
+		const DragBtn = this.node.querySelector('button[data-testid="drag-btn"]');
 
 		this.node.addEventListener('dragstart', (e) => {
 			this.node.classList.add('dragging');
