@@ -1,16 +1,12 @@
-require('@testing-library/jest-dom');
-const {
+import '@testing-library/jest-dom';
+import {
 	getByTestId,
-	queryByTestId,
 	getAllByTestId,
+	queryByTestId,
 	fireEvent,
-} = require('@testing-library/dom');
-const Todos = require('./Todos');
-const Todo = require('../Todo/Todo');
-
-Todos.clearTodos();
-Todos.addTodo({ todoText: 'test todo 1' });
-Todos.addTodo({ todoText: 'test todo 2' });
+} from '@testing-library/dom';
+import Todos from './Todos';
+import Todo from '../Todo/Todo';
 
 document.body.appendChild(Todos.node);
 

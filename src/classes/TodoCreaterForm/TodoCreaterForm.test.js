@@ -1,11 +1,11 @@
-require('@testing-library/jest-dom');
-const {
+import '@testing-library/jest-dom';
+import {
 	getByPlaceholderText,
 	getByText,
 	fireEvent,
-} = require('@testing-library/dom');
-const TodoCreaterForm = require('./TodoCreaterForm');
-const Todos = require('../Todos/Todos.js');
+} from '@testing-library/dom';
+import TodoCreaterForm from './TodoCreaterForm';
+import Todos from '../Todos/Todos.js';
 
 describe('TodoCreaterForm test', () => {
 	document.body.appendChild(TodoCreaterForm.node);

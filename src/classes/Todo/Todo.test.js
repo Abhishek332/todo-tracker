@@ -1,6 +1,6 @@
-require('@testing-library/jest-dom');
-const Todo = require('./Todo');
-const { getByTestId, fireEvent } = require('@testing-library/dom');
+import '@testing-library/jest-dom';
+import { getByTestId, fireEvent } from '@testing-library/dom';
+import Todo from './Todo';
 
 describe('Todo class test', () => {
 	let todo = new Todo({

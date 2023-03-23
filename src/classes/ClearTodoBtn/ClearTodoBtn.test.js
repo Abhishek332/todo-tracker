@@ -1,7 +1,7 @@
-const ClearTodoBtn = require('./ClearTodoBtn');
-const Todos = require('../Todos/Todos');
-const { fireEvent } = require('@testing-library/dom');
-require('@testing-library/jest-dom');
+import ClearTodoBtn from './ClearTodoBtn';
+import Todos from '../Todos/Todos';
+import { fireEvent } from '@testing-library/dom';
+import '@testing-library/jest-dom';
 
 describe('ClearTodoBtn test', () => {
 	it('should return expected node', () => {

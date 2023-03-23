@@ -1,7 +1,7 @@
-const TodoCreaterForm = require('./classes/TodoCreaterForm/TodoCreaterForm');
-const Todos = require('./classes/Todos/Todos');
-const ClearTodoBtn = require('./classes/ClearTodoBtn/ClearTodoBtn');
-require('./index.css');
+import TodoCreaterForm from './classes/TodoCreaterForm/TodoCreaterForm';
+import Todos from './classes/Todos/Todos';
+import ClearTodoBtn from './classes/ClearTodoBtn/ClearTodoBtn';
+import './index.css';
 
 document.addEventListener('DOMContentLoaded', (e) => {
 	const Container = document.querySelector('.container');
