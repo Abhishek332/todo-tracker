@@ -87,8 +87,12 @@ body {
 	margin: 4px 0;
 	display: inline-flex;
 	align-items: center;
-	padding: 8px;
+	padding: 0 5px;
 	gap: 2%;
+}
+
+#todos-box .todo > * {
+	background-color: transparent;
 }
 
 #todos-box .todo.dragging {
@@ -98,26 +102,37 @@ body {
 
 #todos-box .todo .drag-grip {
 	cursor: move;
+	height: 100%;
+}
+
+#todos-box .todo .drag-grip svg {
+	width: 8px;
 }
 
 #todos-box .todo .drag-grip .fa-grip-lines-vertical {
 	color: chocolate;
 	font-size: 24px;
+	height: 100%;
 }
 
 #todos-box .todo button {
-	background-color: transparent;
 	cursor: pointer;
+}
+
+#todos-box input[type='checkbox'] {
+	height: 100%;
 }
 
 #todos-box .todo .todo-text,
 #todos-box .todo .todo-text * {
 	width: 100%;
-	background-color: transparent;
+	height: 100%;
 }
 
 #todos-box .todo .todo-text p {
 	color: chocolate;
+	height: 100%;
+	padding: 8px 0;
 }
 
 #todos-box .todo .todo-text p.mark-done {
