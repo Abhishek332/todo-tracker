@@ -1,6 +1,7 @@
 import Todo from '../Todo/Todo';
 
 class Todos {
+	insertAfterThisElement = null;
 	constructor() {
 		this.value = JSON.parse(localStorage.getItem('todos') || '[]');
 		this.node = document.createElement('div');
@@ -19,48 +20,50 @@ class Todos {
 		});
 	}
 
-	#getElementsAfterTodo(clientY) {
-		const remainDraggableTodos = [
-			...this.node.querySelectorAll('.todo:not(.dragging)'),
-		];
+	#getInsertAfterThisElement(draggedTodoTop) {
+		const allTodoElements = [...this.node.querySelectorAll('.todo')];
 
-		const closestAfterTodo = remainDraggableTodos.reduce(
-			(closestTodo, remainDraggableTodo) => {
-				const box = remainDraggableTodo.getBoundingClientRect();
-				const offset = clientY - box.top - box.height / 2;
+		const nearestTodo = allTodoElements.reduce(
+			(nearestTodo, currentElement) => {
+				const box = currentElement.getBoundingClientRect();
 
-				if (offset < 0 && offset > closestTodo.offset) {
-					return { offset, element: remainDraggableTodo };
+				if (box.top <= draggedTodoTop && box.top > nearestTodo.elementTop) {
+					return { elementTop: box.top, element: currentElement };
 				} else {
-					return closestTodo;
+					return nearestTodo;
 				}
 			},
-			{ offset: Number.NEGATIVE_INFINITY, element: null }
+			{ elementTop: Number.NEGATIVE_INFINITY, element: null }
 		);
 
-		return closestAfterTodo.element;
+		this.insertAfterThisElement = nearestTodo?.element;
 	}
 
 	#addEventListeners() {
 		this.node.addEventListener('dragover', (e) => {
 			e.preventDefault();
 
-			const draggedTodo = this.node.querySelector('.todo.dragging');
-			const afterElement = this.#getElementsAfterTodo(e.clientY);
-
-			if (afterElement === null) {
-				//dragged at the end of the list
-				this.node.appendChild(draggedTodo);
-			} else {
-				this.node.insertBefore(draggedTodo, afterElement);
+			if (e.target !== this.node && !e.target.classList.contains('todo')) {
+				this.#getInsertAfterThisElement(e.clientY - e.offsetY + 0.3515625);
 			}
 		});
 
 		this.node.addEventListener('drop', (e) => {
 			const draggedTodo = this.node.querySelector('.todo.dragging');
 			const allTodoElements = [...this.node.querySelectorAll('.todo')];
-			const draggedTodoIndex = allTodoElements.indexOf(draggedTodo);
 
+			if (!this.insertAfterThisElement) {
+				//dragged at the end of the list
+				this.node.insertBefore(draggedTodo, allTodoElements[0]);
+			} else {
+				this.node.insertBefore(
+					draggedTodo,
+					this.insertAfterThisElement.nextSibling
+				);
+			}
+
+			const updatedTodoElements = [...this.node.querySelectorAll('.todo')];
+			const draggedTodoIndex = updatedTodoElements.indexOf(draggedTodo);
 			this.changeTodosOrder(draggedTodo.id, draggedTodoIndex);
 		});
 
